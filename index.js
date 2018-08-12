@@ -7,6 +7,11 @@ let bodyParser = require('body-parser');
 let port = process.env.PORT || '3000';
 let mongoose = require('mongoose');
 
+//keep heroku dyno awake
+setInterval(function() {
+	http.get("https://slackeightball.herokuapp.com");
+}, 300000);
+
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').load();
 }
