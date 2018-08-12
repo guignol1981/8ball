@@ -26,6 +26,10 @@ let responses = [
 	{type: 'negative', text: 'Very doubtful'},
 ];
 
+module.exports.authorize = function(req, res) {
+	res.send();
+};
+
 module.exports.handleRequest = function(req, res) {
 	res.send();
 
