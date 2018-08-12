@@ -41,9 +41,7 @@ module.exports.authorize = function(req, res) {
 		let JSONresponse = JSON.parse(body);
 
 		if (!JSONresponse.ok) {
-			console.log(JSONresponse);
 		} else {
-			console.log(JSONresponse);
 			let webwookKey = new WebhookKey();
 
 			webwookKey.teamId = JSONresponse['team_id'];
@@ -59,9 +57,8 @@ module.exports.authorize = function(req, res) {
 
 module.exports.handleRequest = function(req, res) {
 	res.send();
-	console.log(req.body);
+
 	slack.token = process.env.SLACK_OAUTH_TOKEN;
-	console.log(req.body);
 
 	WebhookKey.findOne({
 		teamId: req.body['team_id']
