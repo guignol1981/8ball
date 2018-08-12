@@ -1,6 +1,9 @@
 let Slack = require('slack-node');
 let slack = new Slack();
 
+let request = require('request');
+let WebhookKey = require('../models/webhook-key');
+
 let responses = [
 	{type: 'affirmative', text: 'It is certain'},
 	{type: 'affirmative', text: 'As I see it, yes'},
@@ -26,34 +29,69 @@ let responses = [
 	{type: 'negative', text: 'Very doubtful'},
 ];
 
+module.exports.authorize = function(req, res) {
+	let options = {
+		uri: 'https://slack.com/api/oauth.access?code='
+		+ req.query.code +
+		'&client_id=' + process.env.SLACK_CLIENT_ID +
+		'&client_secret=' + process.env.SLACK_CLIENT_SECRET,
+		method: 'GET'
+	};
+	request(options, (error, response, body) => {
+		let JSONresponse = JSON.parse(body);
+
+		if (!JSONresponse.ok) {
+			console.log(JSONresponse);
+		} else {
+			console.log(JSONresponse);
+			let webwookKey = new WebhookKey();
+
+			webwookKey.teamId = JSONresponse['team_id'];
+			webwookKey.channelId = JSONresponse['incoming_webhook']['channel_id'];
+			webwookKey.URL = JSONresponse['incoming_webhook']['url'];
+
+			webwookKey.save().then(() => {
+				res.send();
+			});
+		}
+	});
+};
+
 module.exports.handleRequest = function(req, res) {
 	res.send();
-
+	console.log(req.body);
 	slack.token = process.env.SLACK_OAUTH_TOKEN;
-	slack.setWebhook(process.env.SLACK_WEBHOOK_URL);
+	console.log(req.body);
 
-	let response = responses[Math.floor(Math.random() * responses.length)];
+	WebhookKey.findOne({
+		teamId: req.body['team_id']
+	}).exec().then(webhook => {
+		slack.setWebhook(webhook.URL);
 
-	let getColor = function(type) {
-		switch (type) {
-			case 'affirmative':
-				return 'good';
-			case 'non-commital':
-				return 'warning';
-			case 'negative':
-				return 'danger';
-		}
-	};
+		let response = responses[Math.floor(Math.random() * responses.length)];
 
-	slack.webhook({
-		text: `*${req.body.user_name}* asked ${req.body.text}`,
-		attachments: [
-			{
-				text: response.text,
-				color: getColor(response.type)
+		let getColor = function(type) {
+			switch (type) {
+				case 'affirmative':
+					return 'good';
+				case 'non-commital':
+					return 'warning';
+				case 'negative':
+					return 'danger';
 			}
-		]
-	}, function(err) {
-		console.log(err);
+		};
+
+		slack.webhook({
+			text: `*${req.body.user_name}* asked ${req.body.text}`,
+			attachments: [
+				{
+					text: response.text,
+					color: getColor(response.type)
+				}
+			]
+		}, function(err) {
+			console.log(err);
+		});
 	});
+
 };
