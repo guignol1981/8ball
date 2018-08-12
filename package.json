@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "postinstall": "ng build -prod --env=prod"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
