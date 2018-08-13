@@ -71,7 +71,7 @@ module.exports.handleRequest = function(req, res) {
 			switch (type) {
 				case 'affirmative':
 					return 'good';
-				case 'non-commital':
+				case 'non-committal':
 					return 'warning';
 				case 'negative':
 					return 'danger';
@@ -79,7 +79,7 @@ module.exports.handleRequest = function(req, res) {
 		};
 
 		slack.webhook({
-			text: `*${req.body.user_name}* asked ${req.body.text}`,
+			text: `*${req.body.user_name}* asked *${req.body.text}*`,
 			attachments: [
 				{
 					text: response.text,
