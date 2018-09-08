@@ -29,7 +29,7 @@ module.exports = class SlackController {
 			})
 			.catch(console.error);
 
-		res.send('success');
+		res.send();
 	}
 
 	static handleAction(req, res) {
@@ -65,6 +65,6 @@ module.exports = class SlackController {
 				throw new Error('Unknown action callback_id');
 		}
 
-		res.send('success');
+		res.send();
 	}
 };
