@@ -14,6 +14,7 @@ module.exports = class SlackController {
 					text: answer.text,
 					color: medium.typeToTextColor(answer.type),
 					callback_id: 'shake_ball',
+					as_user: false,
 					actions: [
 						{
 							name: "shake",
