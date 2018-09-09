@@ -8,13 +8,13 @@ module.exports = class SlackController {
 
 		web.chat.postMessage({
 			channel: req.body['channel_id'],
+			as_user: false,
 			text: `*${req.body['user_name']}* asked *${req.body['text']}*`,
 			attachments: [
 				{
 					text: answer.text,
 					color: medium.typeToTextColor(answer.type),
 					callback_id: 'shake_ball',
-					as_user: false,
 					actions: [
 						{
 							name: "shake",
