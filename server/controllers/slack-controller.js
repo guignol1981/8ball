@@ -5,9 +5,9 @@ const medium = require('../business/medium');
 module.exports = class SlackController {
 	static handleCommand(req, res) {
 		const answer = medium.getRandomAnswers();
+		console.log(req.body);
 
 		web.chat.postMessage({
-			console.log(req.body);
 			channel: req.body['channel_id'],
 			text: `*${req.body['user_name']}* asked *${req.body['text']}*`,
 			attachments: [
