@@ -45,8 +45,6 @@ module.exports = class SlackController {
 	}
 
 	static handleAction(req, res) {
-		SlackController.confirmReceipt(res);
-
 		switch (req['callback_id']) {
 			case 'shake_ball':
 				TeamAccessToken.findByTeamId(req['team']['id'])
