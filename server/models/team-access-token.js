@@ -15,6 +15,12 @@ class TeamAccessToken {
 		return this['accessToken'];
 	}
 
+	static findByTeamId(teamId) {
+		return this.findOne({
+			teamId: teamId
+		});
+	}
+
 }
 
 let schema = new Schema({
