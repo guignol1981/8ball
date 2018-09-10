@@ -3,7 +3,10 @@ const medium = require('../business/medium');
 const TeamAccessToken = require('../models/team-access-token');
 
 module.exports = class SlackController {
+
 	static handleCommand(req, res) {
+		this.confirmingReceipt(res);
+
 		TeamAccessToken.findByTeamId(req.body['team_id'])
 			.exec()
 			.then(teamAccessToken => {
@@ -39,11 +42,11 @@ module.exports = class SlackController {
 					.catch(console.error);
 
 			});
-
-		// res.send();
 	}
 
 	static handleAction(req, res) {
+		this.confirmingReceipt(res);
+
 		switch (req['callback_id']) {
 			case 'shake_ball':
 				TeamAccessToken.findByTeamId(req['team']['id'])
@@ -87,9 +90,12 @@ module.exports = class SlackController {
 			default:
 				throw new Error('Unknown action callback_id');
 		}
-
-		// res.send();
 	}
+
+	static confirmingReceipt(res) {
+		res.status(200).send();
+	}
+
 };
 
 
