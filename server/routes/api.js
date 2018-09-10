@@ -17,7 +17,8 @@ router.post('/command', bodyParser.urlencoded(
 ), authenticator.verifySignature, slackController.handleCommand);
 router.post('/actions', slackInteractions.expressMiddleware());
 
-slackInteractions.action('shake_ball', slackController.handleAction);
+slackInteractions.action('shake_ball', slackController.handleShakeAction);
+slackInteractions.action('ask', slackController.handleAskAction);
 
 module.exports = router;
 
