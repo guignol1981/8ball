@@ -5,7 +5,7 @@ const TeamAccessToken = require('../models/team-access-token');
 module.exports = class SlackController {
 
 	static handleCommand(req, res) {
-		this.confirmingReceipt(res);
+		SlackController.confirmReceipt(res);
 
 		TeamAccessToken.findByTeamId(req.body['team_id'])
 			.exec()
@@ -45,7 +45,7 @@ module.exports = class SlackController {
 	}
 
 	static handleAction(req, res) {
-		this.confirmingReceipt(res);
+		SlackController.confirmReceipt(res);
 
 		switch (req['callback_id']) {
 			case 'shake_ball':
@@ -92,7 +92,7 @@ module.exports = class SlackController {
 		}
 	}
 
-	static confirmingReceipt(res) {
+	static confirmReceipt(res) {
 		res.status(200).send();
 	}
 
