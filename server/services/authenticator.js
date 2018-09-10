@@ -1,5 +1,6 @@
 let crypto = require('crypto');
 let request = require('request');
+let TeamAccessToken = require('../models/team-access-token');
 
 module.exports = class Authenticator {
 	static authorize(req, res) {
@@ -11,12 +12,17 @@ module.exports = class Authenticator {
 			method: 'GET'
 		};
 		request(options, (error, response, body) => {
-			let JSONresponse = JSON.parse(body);
+			let parsedBody = JSON.parse(body);
 
-			if (!JSONresponse.ok) {
+			if (!parsedBody.ok) {
 				console.log('error: ' +  error);
-				console.log('response: ' + JSONresponse);
 			} else {
+				TeamAccessToken.create({
+					teamId: parsedBody['team_id'],
+					teamName: parsedBody['team_name'],
+					accessToken: parsedBody['access_token']
+				});
+
 				res.send();
 			}
 		});

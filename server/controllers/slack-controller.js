@@ -1,36 +1,47 @@
 const {WebClient} = require('@slack/client');
-const web = new WebClient(process.env.SLACK_OAUTH_TOKEN);
 const medium = require('../business/medium');
+const TeamAccessToken = require('../models/team-access-token');
 
 module.exports = class SlackController {
 	static handleCommand(req, res) {
 		const answer = medium.getRandomAnswers();
 
-		web.chat.postMessage({
-			as_user: false,
-			channel: req.body['channel_id'],
-			text: `*${req.body['user_name']}* asked *${req.body['text']}*`,
-			attachments: [
-				{
-					text: answer.text,
-					color: medium.typeToTextColor(answer.type),
-					callback_id: 'shake_ball',
-					actions: [
+		TeamAccessToken.find({teamId: req.body['team_id']})
+			.exec()
+			.then(teamAccessToken => {
+				if (!teamAccessToken) {
+					return;
+				}
+
+				const web = new WebClient(teamAccessToken.getAccessToken());
+
+				web.chat.postMessage({
+					as_user: false,
+					channel: req.body['channel_id'],
+					text: `*${req.body['user_name']}* asked *${req.body['text']}*`,
+					attachments: [
 						{
-							name: "shake",
-							text: "Shake",
-							type: "button",
-							value: "shake"
+							text: answer.text,
+							color: medium.typeToTextColor(answer.type),
+							callback_id: 'shake_ball',
+							actions: [
+								{
+									name: "shake",
+									text: "Shake",
+									type: "button",
+									value: "shake"
+								}
+							]
 						}
 					]
-				}
-			]
-		})
-			.then((res) => {
-			})
-			.catch(console.error);
+				})
+					.then((res) => {
+					})
+					.catch(console.error);
 
-		res.send();
+				res.send();
+
+			});
 	}
 
 	static handleAction(req, res) {
