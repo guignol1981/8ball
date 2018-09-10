@@ -14,7 +14,8 @@ module.exports = class Authenticator {
 			let JSONresponse = JSON.parse(body);
 
 			if (!JSONresponse.ok) {
-
+				console.log('error: ' +  error);
+				console.log('response: ' + JSONresponse);
 			} else {
 				res.send();
 			}

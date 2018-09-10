@@ -7,8 +7,8 @@ module.exports = class SlackController {
 		const answer = medium.getRandomAnswers();
 
 		web.chat.postMessage({
-			channel: req.body['channel_id'],
 			as_user: false,
+			channel: req.body['channel_id'],
 			text: `*${req.body['user_name']}* asked *${req.body['text']}*`,
 			attachments: [
 				{
