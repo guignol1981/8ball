@@ -40,7 +40,7 @@ module.exports = class SlackController {
 
 			});
 
-		res.send();
+		// res.send();
 	}
 
 	static handleAction(req, res) {
@@ -88,29 +88,8 @@ module.exports = class SlackController {
 				throw new Error('Unknown action callback_id');
 		}
 
-		res.send();
+		// res.send();
 	}
 };
 
-// { type: 'interactive_message',
-// 	actions: [ { name: 'shake', type: 'button', value: 'shake' } ],
-// 	callback_id: 'shake_ball',
-// 	team: { id: 'TBZQ25QBB', domain: 'slackappplayground' },
-// 	channel: { id: 'CBZQ264EM', name: 'random' },
-// 	user: { id: 'UC1LBDH4N', name: 'vincentguillemette198' },
-// 	action_ts: '1536541793.709672',
-// 		message_ts: '1536541769.000100',
-// 	attachment_id: '1',
-// 	token: 'PUvtkr9YJZHZjYNRaI8n4gWA',
-// 	is_app_unfurl: false,
-// 	original_message:
-// 	{ text: '*vincentguillemette198* asked *test*',
-// 		username: 'SlackBall',
-// 		bot_id: 'BCQ288S10',
-// 		attachments: [ [Object] ],
-// 		type: 'message',
-// 		subtype: 'bot_message',
-// 		ts: '1536541769.000100' },
-// 	response_url:
-// 		'https://hooks.slack.com/actions/TBZQ25QBB/432082587554/u8IGeUHF0UQ0N1nqHVUI2JhP',
-// 			trigger_id: '431359294464.407818194385.fde947f8e1d54b72c1381b26556e728c' }
+
