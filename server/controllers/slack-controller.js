@@ -86,8 +86,6 @@ module.exports = class SlackController {
 		TeamAccessToken.findByTeamId(req['team']['id'])
 			.exec()
 			.then(teamAccessToken => {
-				console.log(teamAccessToken);
-
 				if (!teamAccessToken) {
 					return;
 				}
