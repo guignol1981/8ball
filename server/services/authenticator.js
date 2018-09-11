@@ -39,9 +39,9 @@ module.exports = class Authenticator {
 		}
 
 		const basestring = [version, timestamp, rawBody].join(':');
-		const app_signature = 'v0=' + crypto.createHmac('sha256', process.env.SLACK_SIGNING_SECRET).update(basestring).digest('hex');
+		const appSignature = 'v0=' + crypto.createHmac('sha256', process.env.SLACK_SIGNING_SECRET).update(basestring).digest('hex');
 
-		if (app_signature === signature) {
+		if (appSignature === signature) {
 			next();
 		}
 	}

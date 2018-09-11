@@ -12,7 +12,12 @@ let mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true});
 
 app.use(express.static(path.join(__dirname, '/public')));
+
 app.use('/api', api);
+
+app.get('/help', (req, res) => {
+	res.sendFile(path.join(__dirname, '/public/help.html'));
+});
 
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '/public/index.html'));
@@ -22,4 +27,4 @@ app.set('port', process.env.PORT);
 
 let server = http.createServer(app);
 
-server.listen(process.env.PORT, () => console.log(`8Ball api running on localhost:${process.env.PORT}`));
+server.listen(process.env.PORT, () => console.log(`SlackBall api running on localhost:${process.env.PORT}`));
