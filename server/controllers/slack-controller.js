@@ -14,8 +14,8 @@ module.exports = class SlackController {
 					return;
 				}
 
-				const answer = medium.getRandomAnswers();
 				const web = new WebClient(teamAccessToken.getAccessToken());
+				const answer = medium.getRandomAnswers();
 
 				web.chat.postMessage({
 					as_user: false,
@@ -48,8 +48,6 @@ module.exports = class SlackController {
 		TeamAccessToken.findByTeamId(req['team']['id'])
 			.exec()
 			.then(teamAccessToken => {
-				console.log(teamAccessToken);
-
 				if (!teamAccessToken) {
 					return;
 				}
@@ -85,8 +83,6 @@ module.exports = class SlackController {
 	}
 
 	static handleAskAction(req, res) {
-		console.log(req);
-
 		TeamAccessToken.findByTeamId(req['team']['id'])
 			.exec()
 			.then(teamAccessToken => {
@@ -96,8 +92,8 @@ module.exports = class SlackController {
 					return;
 				}
 
-				const answer = medium.getRandomAnswers();
 				const web = new WebClient(teamAccessToken.getAccessToken());
+				const answer = medium.getRandomAnswers();
 
 				web.chat.postMessage({
 					as_user: false,
